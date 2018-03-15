@@ -8,9 +8,13 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.Toolkit;
 import java.io.*;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 /**
  *
@@ -22,14 +26,13 @@ public final class Clipboardapplication implements ClipboardOwner {
         Clipboardapplication textTransfer = new Clipboardapplication();
         int tracking = 1;
         String previousContent = null;
-        String currentContent;
+        String currentContent = null;
         
-        //display what is currently on the clipboard
-        //System.out.println("Clipboard contains:\n" + textTransfer.getClipboardContents());
-        currentContent = textTransfer.getClipboardContents();
+        
+        
+        
         
         //Properties of the main JFrame
-        
         JFrame mainWindow = new JFrame();
         final int defaultFrameWidth = 500;
         final int defaultFrameHeight = 600;
@@ -37,10 +40,15 @@ public final class Clipboardapplication implements ClipboardOwner {
         mainWindow.setTitle("Clipboard Content Tracker @Wessel Bakker - 2018");
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel mainPanel = new JPanel();
-        JLabel currentDisplay = new JLabel("");
-        JLabel previousDisplay = new JLabel("");
+        JTextField currentDisplay = new JTextField("");
+        JTextField previousDisplay = new JTextField("");
+        currentDisplay.setEditable(false);
+        previousDisplay.setEditable(false);
+        
         JLabel topInfo = new JLabel("Current content of system clipboard(updating may take a few seconds):");
         JLabel previousInfo = new JLabel("This was the previous content of the clipboard:");
+        
+        
         mainPanel.add(topInfo);
         mainPanel.add(currentDisplay);
         mainPanel.add(previousInfo);
