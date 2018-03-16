@@ -1,5 +1,7 @@
 package clipboardapplication;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.Transferable;
@@ -7,11 +9,16 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -21,43 +28,64 @@ import javax.swing.ScrollPaneConstants;
  * @author Wessel
  */
 public final class Clipboardapplication implements ClipboardOwner {
-
-    public static void main(String... aArguments) {
-        Clipboardapplication textTransfer = new Clipboardapplication();
-        int tracking = 1;
-        String previousContent = null;
-        String currentContent = null;
-        
-        
-        
-        
-        
-        //Properties of the main JFrame
+    
+    public void createComponents() {
+    //Properties of the main JFrame
         JFrame mainWindow = new JFrame();
+        mainWindow.setResizable(false);
         final int defaultFrameWidth = 500;
         final int defaultFrameHeight = 600;
         mainWindow.setSize(defaultFrameWidth, defaultFrameHeight);
         mainWindow.setTitle("Clipboard Content Tracker @Wessel Bakker - 2018");
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel mainPanel = new JPanel();
-        JTextField currentDisplay = new JTextField("");
-        JTextField previousDisplay = new JTextField("");
+        JTextArea currentDisplay = new JTextArea("");
+        JTextArea previousDisplay = new JTextArea("");
         currentDisplay.setEditable(false);
         previousDisplay.setEditable(false);
-        
-        JLabel topInfo = new JLabel("Current content of system clipboard(updating may take a few seconds):");
+        currentDisplay.setSize(40, 40);
+        currentDisplay.setLocation(20, 30);
+        //currentDisplay.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        //previousDisplay.setBorder(BorderFactory.createLineBorder(Color.RED));
+        JLabel topInfo = new JLabel("Current content of system clipboard (updating may take a few seconds):");
         JLabel previousInfo = new JLabel("This was the previous content of the clipboard:");
         
+        //buttons
+        JButton copyP = new JButton("Copy");
         
+             
+        
+        
+        //scrollable things
+        JScrollPane scrollC = new JScrollPane(currentDisplay);
+        scrollC.setPreferredSize(new Dimension(400, 200));
+        
+        JScrollPane scrollP = new JScrollPane(previousDisplay);
+        scrollP.setPreferredSize(new Dimension(400, 200));
+        
+        previousInfo.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+        topInfo.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+        currentDisplay.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        previousDisplay.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         mainPanel.add(topInfo);
-        mainPanel.add(currentDisplay);
+        mainPanel.add(scrollC);
         mainPanel.add(previousInfo);
-        mainPanel.add(previousDisplay);
+        mainPanel.add(scrollP);
+        mainPanel.add(copyP);
         mainWindow.add(mainPanel);
-        
         
         //display the main window
         mainWindow.setVisible(true);
+}
+    
+    
+    public static void main(String... aArguments) {
+        Clipboardapplication textTransfer = new Clipboardapplication();
+        int tracking = 1;
+        String previousContent = null;
+        String currentContent = null;
+        
+      
         
         while (tracking == 1) {
             try{
@@ -129,4 +157,18 @@ public final class Clipboardapplication implements ClipboardOwner {
         }
         return result;
     }
+    
+    class ClickListener implements ActionListener {
+        
+    @Override
+    public void actionPerformed(ActionEvent event) 
+         {
+            System.out.println("I was clicked.");
+            }
+}
+
+
+
+
+
 }
